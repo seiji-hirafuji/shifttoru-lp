@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>シフトる｜飲食店のシフト管理をもっとラクに</title>
+  <meta name="description" content="LINEでシフト希望を収集し、自動生成・一斉通知まで一気通貫。飲食店の店長・オーナー向けシフト管理ツール「シフトる」">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Hiragino Sans', 'Yu Gothic', 'Noto Sans JP', sans-serif; color: #333; line-height: 1.7; }
+
+    /* ナビ */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: white; border-bottom: 1px solid #eee;
+      padding: 0 2rem; height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    nav .logo { font-size: 1.3rem; font-weight: bold; color: #06c755; text-decoration: none; }
+    nav .logo span { color: #333; }
+    nav .cta-nav {
+      background: #06c755; color: white; padding: 0.5rem 1.2rem;
+      border-radius: 24px; text-decoration: none; font-size: 0.88rem; font-weight: bold;
+      transition: background 0.2s;
+    }
+    nav .cta-nav:hover { background: #05a847; }
+
+    /* ヒーロー */
+    .hero {
+      background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+      padding: 120px 2rem 80px;
+      text-align: center;
+    }
+    .hero .badge {
+      display: inline-block; background: #06c755; color: white;
+      font-size: 0.78rem; font-weight: bold; padding: 0.3rem 0.9rem;
+      border-radius: 24px; margin-bottom: 1.2rem; letter-spacing: 0.05em;
+    }
+    .hero h1 {
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      font-weight: bold; color: #111; line-height: 1.4;
+      margin-bottom: 1.2rem;
+    }
+    .hero h1 span { color: #06c755; }
+    .hero p {
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      color: #555; margin-bottom: 2.5rem; max-width: 560px; margin-left: auto; margin-right: auto;
+    }
+    .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: #06c755; color: white; padding: 0.9rem 2.2rem;
+      border-radius: 32px; text-decoration: none; font-size: 1rem; font-weight: bold;
+      box-shadow: 0 4px 16px rgba(6,199,85,0.35); transition: all 0.2s;
+    }
+    .btn-primary:hover { background: #05a847; transform: translateY(-2px); }
+    .hero-note { font-size: 0.8rem; color: #888; margin-top: 1rem; }
+
+    /* 課題 */
+    .problem {
+      background: #fff8f0; padding: 80px 2rem;
+      text-align: center;
+    }
+    .problem h2 { font-size: 1.6rem; color: #111; margin-bottom: 0.5rem; }
+    .problem .sub { color: #777; margin-bottom: 3rem; font-size: 0.95rem; }
+    .problem-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem; max-width: 900px; margin: 0 auto;
+    }
+    .problem-card {
+      background: white; border-radius: 12px; padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06); text-align: left;
+    }
+    .problem-card .icon { font-size: 2rem; margin-bottom: 0.8rem; }
+    .problem-card h3 { font-size: 1rem; color: #c0392b; margin-bottom: 0.4rem; }
+    .problem-card p { font-size: 0.88rem; color: #666; }
+
+    /* 解決 */
+    .solution {
+      background: white; padding: 80px 2rem; text-align: center;
+    }
+    .section-label {
+      display: inline-block; background: #e8f5e9; color: #06c755;
+      font-size: 0.78rem; font-weight: bold; padding: 0.3rem 0.9rem;
+      border-radius: 24px; margin-bottom: 1rem; letter-spacing: 0.05em;
+    }
+    .section-title { font-size: 1.8rem; color: #111; margin-bottom: 0.5rem; }
+    .section-sub { color: #777; margin-bottom: 3rem; font-size: 0.95rem; }
+
+    /* 機能 */
+    .features { background: #f8fffe; padding: 80px 2rem; }
+    .features-inner { max-width: 960px; margin: 0 auto; text-align: center; }
+    .feature-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem; margin-top: 3rem;
+    }
+    .feature-card {
+      background: white; border-radius: 16px; padding: 2rem 1.5rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06); text-align: center;
+      transition: transform 0.2s;
+    }
+    .feature-card:hover { transform: translateY(-4px); }
+    .feature-card .icon { font-size: 2.5rem; margin-bottom: 1rem; }
+    .feature-card h3 { font-size: 1.05rem; color: #111; margin-bottom: 0.6rem; }
+    .feature-card p { font-size: 0.85rem; color: #666; }
+
+    /* フロー */
+    .flow { background: white; padding: 80px 2rem; text-align: center; }
+    .flow-steps {
+      display: flex; gap: 0; max-width: 800px; margin: 3rem auto 0;
+      flex-wrap: wrap; justify-content: center;
+    }
+    .flow-step {
+      flex: 1; min-width: 140px; padding: 1.5rem 1rem; position: relative;
+    }
+    .flow-step:not(:last-child)::after {
+      content: '→'; position: absolute; right: -8px; top: 50%;
+      transform: translateY(-50%); color: #06c755; font-size: 1.4rem; font-weight: bold;
+    }
+    .flow-step .num {
+      width: 44px; height: 44px; border-radius: 50%; background: #06c755;
+      color: white; font-size: 1.1rem; font-weight: bold;
+      display: flex; align-items: center; justify-content: center; margin: 0 auto 0.8rem;
+    }
+    .flow-step h3 { font-size: 0.95rem; color: #111; margin-bottom: 0.4rem; }
+    .flow-step p { font-size: 0.8rem; color: #777; }
+
+    /* こんな方に */
+    .for-who { background: #f0fdf4; padding: 80px 2rem; text-align: center; }
+    .for-who-list {
+      display: flex; flex-direction: column; gap: 0.8rem;
+      max-width: 480px; margin: 2rem auto 0; text-align: left;
+    }
+    .for-who-item {
+      background: white; border-left: 4px solid #06c755;
+      padding: 0.9rem 1.2rem; border-radius: 0 8px 8px 0;
+      font-size: 0.95rem; color: #333;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    }
+    .for-who-item::before { content: '✓ '; color: #06c755; font-weight: bold; }
+
+    /* CTA */
+    .cta-section {
+      background: linear-gradient(135deg, #06c755 0%, #05a847 100%);
+      padding: 80px 2rem; text-align: center; color: white;
+    }
+    .cta-section h2 { font-size: 1.8rem; margin-bottom: 1rem; }
+    .cta-section p { font-size: 1rem; opacity: 0.9; margin-bottom: 2.5rem; }
+
+    /* お問い合わせフォーム */
+    .contact-form {
+      background: white; border-radius: 16px; padding: 2.5rem;
+      max-width: 540px; margin: 0 auto; text-align: left;
+    }
+    .contact-form h3 { font-size: 1.1rem; color: #111; margin-bottom: 1.5rem; text-align: center; }
+    .form-group { margin-bottom: 1.2rem; }
+    .form-group label { display: block; font-size: 0.85rem; color: #555; margin-bottom: 0.4rem; font-weight: 600; }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%; border: 1px solid #ddd; border-radius: 8px;
+      padding: 0.7rem 1rem; font-size: 0.9rem; font-family: inherit;
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus { outline: none; border-color: #06c755; }
+    .form-group textarea { height: 100px; resize: vertical; }
+    .form-submit {
+      width: 100%; background: #06c755; color: white; border: none;
+      padding: 0.9rem; border-radius: 8px; font-size: 1rem; font-weight: bold;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .form-submit:hover { background: #05a847; }
+    .form-note { font-size: 0.78rem; color: #999; text-align: center; margin-top: 0.8rem; }
+
+    /* フッター */
+    footer {
+      background: #111; color: #888; text-align: center;
+      padding: 2rem; font-size: 0.82rem;
+    }
+    footer a { color: #06c755; text-decoration: none; }
+
+    @media (max-width: 600px) {
+      .flow-step:not(:last-child)::after { display: none; }
+      .hero { padding-top: 100px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ナビ -->
+<nav>
+  <a href="#" class="logo">シフト<span>る</span></a>
+  <a href="#contact" class="cta-nav">無料で問い合わせる</a>
+</nav>
+
+<!-- ヒーロー -->
+<section class="hero">
+  <div class="badge">🍽 飲食店専用 シフト管理ツール</div>
+  <h1>シフト作成の手間を、<br><span>ゼロに近づける。</span></h1>
+  <p>LINEでシフト希望を集めて、ボタン1つで自動生成。<br>全スタッフへの通知もLINEで完了。</p>
+  <div class="hero-btns">
+    <a href="#contact" class="btn-primary">📩 無料で問い合わせる</a>
+  </div>
+  <p class="hero-note">※ 現在、導入店舗を募集中です（初期費用なし・月額制）</p>
+</section>
+
+<!-- 課題 -->
+<section class="problem">
+  <h2>こんな悩み、ありませんか？</h2>
+  <p class="sub">飲食店のシフト管理、まだこんな方法でやっていませんか</p>
+  <div class="problem-grid">
+    <div class="problem-card">
+      <div class="icon">😩</div>
+      <h3>LINEやメモで希望をバラバラに収集</h3>
+      <p>スタッフごとに連絡方法が違って、取りまとめるだけで一苦労</p>
+    </div>
+    <div class="problem-card">
+      <div class="icon">📋</div>
+      <h3>Excelでシフトを手作り</h3>
+      <p>作るのに毎月数時間かかる。変更のたびに全部直し直し</p>
+    </div>
+    <div class="problem-card">
+      <div class="icon">📞</div>
+      <h3>シフト通知が手間すぎる</h3>
+      <p>一人ずつ電話やLINEでシフトを伝える。返信確認も大変</p>
+    </div>
+    <div class="problem-card">
+      <div class="icon">💸</div>
+      <h3>給与計算が面倒</h3>
+      <p>勤務時間を集計して、時給をかけて…毎月同じ作業のくり返し</p>
+    </div>
+  </div>
+</section>
+
+<!-- 解決 -->
+<section class="solution">
+  <span class="section-label">SOLUTION</span>
+  <h2 class="section-title">「シフトる」が全部解決します</h2>
+  <p class="section-sub">希望収集から通知まで、シフト管理のすべてをひとつのツールで</p>
+</section>
+
+<!-- 機能 -->
+<section class="features">
+  <div class="features-inner">
+    <span class="section-label">FEATURES</span>
+    <h2 class="section-title">主な機能</h2>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="icon">💬</div>
+        <h3>LINEでシフト希望を収集</h3>
+        <p>スタッフはLINEで希望を送るだけ。電話もメモも不要になります</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">⚡</div>
+        <h3>ワンクリックで自動生成</h3>
+        <p>希望を元に最適なシフトを自動で作成。あとは微調整するだけ</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">📲</div>
+        <h3>LINEで一斉通知</h3>
+        <p>完成したシフトをLINEで全スタッフに一斉送信。既読確認も不要</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">📊</div>
+        <h3>勤務時間・予定給与を自動計算</h3>
+        <p>月ごとの勤務時間と予定給与を自動で集計。給与計算の手間が激減</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">📅</div>
+        <h3>シフト確認画面</h3>
+        <p>ガントチャート形式でシフトを見やすく表示。スタッフも確認できます</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">👥</div>
+        <h3>スタッフ管理</h3>
+        <p>時給・役職・希望収集の設定をひとつの画面で管理できます</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- フロー -->
+<section class="flow">
+  <span class="section-label">HOW IT WORKS</span>
+  <h2 class="section-title">使い方はシンプル</h2>
+  <p class="section-sub">たった4ステップで、毎月のシフト管理が完了します</p>
+  <div class="flow-steps">
+    <div class="flow-step">
+      <div class="num">1</div>
+      <h3>希望収集を開く</h3>
+      <p>対象期間を設定してLINEで告知</p>
+    </div>
+    <div class="flow-step">
+      <div class="num">2</div>
+      <h3>スタッフが希望を送信</h3>
+      <p>LINEから希望日・時間を入力</p>
+    </div>
+    <div class="flow-step">
+      <div class="num">3</div>
+      <h3>シフトを自動生成</h3>
+      <p>ボタン1つで最適なシフトが完成</p>
+    </div>
+    <div class="flow-step">
+      <div class="num">4</div>
+      <h3>LINEで一斉通知</h3>
+      <p>全スタッフに自動送信完了</p>
+    </div>
+  </div>
+</section>
+
+<!-- こんな方に -->
+<section class="for-who">
+  <span class="section-label">FOR WHO</span>
+  <h2 class="section-title">こんな方におすすめ</h2>
+  <div class="for-who-list">
+    <div class="for-who-item">毎月のシフト作成に2〜3時間以上かかっている</div>
+    <div class="for-who-item">スタッフが10名以上いて管理が大変</div>
+    <div class="for-who-item">LINEでのやりとりが多くて見落としが怖い</div>
+    <div class="for-who-item">給与計算のたびに時間を手作業で集計している</div>
+    <div class="for-who-item">アルバイトが多く希望がバラバラで把握しにくい</div>
+  </div>
+</section>
+
+<!-- お問い合わせ -->
+<section class="cta-section" id="contact">
+  <h2>まずは無料でご相談ください</h2>
+  <p>導入方法や料金など、お気軽にお問い合わせください。<br>現在、初期費用なしでご利用いただける導入プランをご案内しています。</p>
+  <div class="contact-form">
+    <h3>📩 お問い合わせフォーム</h3>
+    <form action="https://formspree.io/f/xzdwvkrb" method="POST">
+      <div class="form-group">
+        <label>お名前 <span style="color:#e53935;">*</span></label>
+        <input type="text" name="name" placeholder="山田 太郎" required>
+      </div>
+      <div class="form-group">
+        <label>店舗名・会社名</label>
+        <input type="text" name="shop" placeholder="○○食堂">
+      </div>
+      <div class="form-group">
+        <label>メールアドレス <span style="color:#e53935;">*</span></label>
+        <input type="email" name="email" placeholder="example@email.com" required>
+      </div>
+      <div class="form-group">
+        <label>スタッフ人数</label>
+        <select name="staff_count">
+          <option value="">選択してください</option>
+          <option value="〜9名">〜9名</option>
+          <option value="10〜19名">10〜19名</option>
+          <option value="20〜29名">20〜29名</option>
+          <option value="30名以上">30名以上</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>ご質問・ご要望</label>
+        <textarea name="message" placeholder="気になることがあればお気軽にどうぞ"></textarea>
+      </div>
+      <input type="hidden" name="_subject" value="【シフトる】お問い合わせ">
+      <input type="hidden" name="_replyto" value="contact@print-mahalo.com">
+      <button type="submit" class="form-submit">送信する →</button>
+      <p class="form-note">返信は contact@print-mahalo.com よりお送りします</p>
+    </form>
+  </div>
+</section>
+
+<!-- フッター -->
+<footer>
+  <p>&copy; 2026 シフトる All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>
