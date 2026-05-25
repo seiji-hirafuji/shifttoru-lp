@@ -3,13 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>シフトる｜シフト管理をもっとラクに</title>
-  <meta name="description" content="LINEでシフト希望を収集し、自動生成・一斉通知まで一気通貫。小売・介護・サービス業など幅広い職場で使えるシフト管理ツール「シフトる」">
+  <title>シフトる｜LINEでシフト管理をもっとラクに</title>
+  <meta name="description" content="LINEでシフト希望を収集し、AIが半自動でシフト作成。新アプリ不要・シフト作成時間を90%以上削減。医療・小売・介護・サービス業など幅広い職場で使えるシフト管理ツール「シフトる」">
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
   <style>
     :root {
       --primary: #FF6B6B;
       --secondary: #4ECDC4;
+      --line: #06C755;
+      --line-dark: #059144;
       --accent: #FFE66D;
       --accent2: #A8E6CF;
       --dark: #2D3436;
@@ -45,18 +47,18 @@
     }
     .logo span { color: var(--secondary); }
     .cta-nav {
-      background: var(--primary); color: white;
+      background: var(--line); color: white;
       padding: 10px 24px; border-radius: 50px;
       text-decoration: none; font-size: 14px; font-weight: 800;
       transition: transform .2s, box-shadow .2s;
-      box-shadow: 0 4px 16px rgba(255,107,107,.3);
+      box-shadow: 0 4px 16px rgba(6,199,85,.3);
     }
-    .cta-nav:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,107,107,.4); }
+    .cta-nav:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(6,199,85,.4); }
 
     /* ── HERO ── */
     .hero {
       min-height: 100vh;
-      background: linear-gradient(135deg, #fff9f9 0%, #f0fffe 50%, #fffef0 100%);
+      background: linear-gradient(135deg, #fff9f9 0%, #f0fffe 50%, #f0fff5 100%);
       display: flex; align-items: center;
       padding: 100px 40px 60px;
       position: relative; overflow: hidden;
@@ -65,14 +67,14 @@
       content: '';
       position: absolute; top: -120px; right: -120px;
       width: 600px; height: 600px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(78,205,196,.15) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(6,199,85,.12) 0%, transparent 70%);
       pointer-events: none;
     }
     .hero::after {
       content: '';
       position: absolute; bottom: -80px; left: -80px;
       width: 400px; height: 400px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(255,107,107,.12) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(255,107,107,.1) 0%, transparent 70%);
       pointer-events: none;
     }
     .hero-inner {
@@ -81,34 +83,50 @@
       gap: 60px; align-items: center; width: 100%;
     }
     .hero-badge {
-      display: inline-block; background: var(--accent);
-      color: var(--dark); font-size: 13px; font-weight: 800;
-      padding: 6px 18px; border-radius: 50px;
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--line); color: white;
+      font-size: 13px; font-weight: 800;
+      padding: 7px 18px; border-radius: 50px;
       margin-bottom: 20px; letter-spacing: .5px;
     }
+    .line-icon {
+      display: inline-block; width: 20px; height: 20px;
+      background: white; border-radius: 5px;
+      font-size: 13px; line-height: 20px; text-align: center;
+      color: var(--line); font-weight: 900;
+    }
     .hero h1 {
-      font-size: clamp(32px, 4vw, 54px);
+      font-size: clamp(30px, 3.8vw, 52px);
       font-weight: 900; line-height: 1.25; margin-bottom: 24px;
     }
     .hero h1 em {
-      font-style: normal; color: var(--primary); position: relative;
+      font-style: normal; color: var(--line); position: relative;
     }
     .hero h1 em::after {
       content: '';
       position: absolute; bottom: 2px; left: 0; right: 0;
-      height: 6px; background: var(--accent);
-      border-radius: 3px; z-index: -1; opacity: .7;
+      height: 6px; background: rgba(6,199,85,.2);
+      border-radius: 3px; z-index: -1;
     }
     .hero p { font-size: 17px; color: var(--mid); line-height: 1.8; margin-bottom: 36px; }
     .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
-    .btn-primary {
-      background: var(--primary); color: white;
+    .btn-line {
+      background: var(--line); color: white;
       padding: 16px 36px; border-radius: 50px;
       font-weight: 800; font-size: 16px; text-decoration: none;
-      box-shadow: 0 6px 24px rgba(255,107,107,.35);
-      transition: transform .2s, box-shadow .2s; display: inline-block;
+      box-shadow: 0 6px 24px rgba(6,199,85,.35);
+      transition: transform .2s, box-shadow .2s; display: inline-flex;
+      align-items: center; gap: 10px;
     }
-    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 32px rgba(255,107,107,.45); }
+    .btn-line:hover { transform: translateY(-3px); box-shadow: 0 10px 32px rgba(6,199,85,.45); }
+    .btn-secondary {
+      background: white; color: var(--dark);
+      padding: 16px 36px; border-radius: 50px;
+      font-weight: 800; font-size: 16px; text-decoration: none;
+      box-shadow: 0 4px 16px rgba(0,0,0,.1);
+      transition: transform .2s; display: inline-block; border: 2px solid #eee;
+    }
+    .btn-secondary:hover { transform: translateY(-3px); }
     .hero-note { font-size: 13px; color: #aaa; margin-top: 16px; }
 
     /* Hero visual */
@@ -147,7 +165,7 @@
       font-size: 13px; font-weight: 800;
       display: flex; align-items: center; gap: 8px; white-space: nowrap;
     }
-    .tag1 { top: -18px; right: -18px; color: var(--secondary); }
+    .tag1 { top: -18px; right: -18px; color: var(--line); }
     .tag2 { bottom: -18px; left: -18px; color: var(--primary); }
 
     /* ── STATS ── */
@@ -159,10 +177,12 @@
     }
     .stat-num {
       font-family: 'Nunito', sans-serif;
-      font-size: 48px; font-weight: 900;
-      color: var(--accent); line-height: 1; margin-bottom: 8px;
+      font-size: 52px; font-weight: 900;
+      color: #FFE66D; line-height: 1; margin-bottom: 8px;
     }
+    .stat-num small { font-size: 24px; }
     .stat-label { color: rgba(255,255,255,.7); font-size: 14px; }
+    .stat-sub { color: rgba(255,255,255,.4); font-size: 12px; margin-top: 4px; }
 
     /* ── SECTION COMMON ── */
     section { padding: 96px 40px; }
@@ -191,36 +211,133 @@
     .problem-card h3 { font-size: 15px; color: var(--primary); font-weight: 800; margin-bottom: 8px; }
     .problem-card p { font-size: 13px; color: var(--mid); }
 
-    /* ── SOLUTION ── */
-    .solution { background: var(--white); text-align: center; padding: 64px 40px; }
-
     /* ── FEATURES ── */
     .features { background: var(--light); text-align: center; }
     .features-inner { max-width: 1080px; margin: 0 auto; }
     .feature-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
       gap: 24px; margin-top: 48px;
     }
     .feature-card {
       background: var(--white); border-radius: var(--radius);
-      padding: 32px 24px; box-shadow: 0 4px 20px rgba(0,0,0,.06);
+      padding: 36px 28px; box-shadow: 0 4px 20px rgba(0,0,0,.06);
       text-align: center; transition: transform .25s, box-shadow .25s;
       position: relative; overflow: hidden;
     }
     .feature-card::before {
       content: ''; position: absolute; top: 0; left: 0; right: 0;
-      height: 4px; border-radius: 0 0 4px 4px;
+      height: 5px; border-radius: 0 0 4px 4px;
     }
-    .feature-card:nth-child(1)::before { background: var(--primary); }
+    .feature-card:nth-child(1)::before { background: var(--line); }
     .feature-card:nth-child(2)::before { background: var(--secondary); }
-    .feature-card:nth-child(3)::before { background: var(--accent); }
-    .feature-card:nth-child(4)::before { background: var(--accent2); }
-    .feature-card:nth-child(5)::before { background: #b39ddb; }
-    .feature-card:nth-child(6)::before { background: #ffab91; }
+    .feature-card:nth-child(3)::before { background: var(--primary); }
     .feature-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(0,0,0,.1); }
-    .feature-card .icon { font-size: 2.4rem; margin-bottom: 16px; }
-    .feature-card h3 { font-size: 16px; font-weight: 800; color: var(--dark); margin-bottom: 10px; }
-    .feature-card p { font-size: 13px; color: var(--mid); }
+    .feature-card .icon { font-size: 2.8rem; margin-bottom: 16px; }
+    .feature-card h3 { font-size: 18px; font-weight: 800; color: var(--dark); margin-bottom: 12px; }
+    .feature-card p { font-size: 14px; color: var(--mid); line-height: 1.8; }
+
+    /* ── AI SECTION ── */
+    .ai-section { background: var(--white); }
+    .ai-inner {
+      max-width: 900px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 60px; align-items: center;
+    }
+    .ai-visual {
+      background: linear-gradient(135deg, #f0fff5 0%, #e8f8ff 100%);
+      border-radius: var(--radius-lg); padding: 40px;
+      text-align: center;
+    }
+    .ai-visual .big-num {
+      font-family: 'Nunito', sans-serif;
+      font-size: 72px; font-weight: 900;
+      color: var(--line); line-height: 1;
+    }
+    .ai-visual .big-label { font-size: 14px; color: var(--mid); margin: 8px 0 24px; }
+    .ai-arrow { font-size: 32px; color: var(--mid); margin: 12px 0; }
+    .ai-visual .small-num {
+      font-family: 'Nunito', sans-serif;
+      font-size: 72px; font-weight: 900;
+      color: var(--secondary); line-height: 1;
+    }
+    .ai-content { }
+    .ai-content .section-tag { display: inline-block; background: rgba(6,199,85,.12); color: var(--line-dark); }
+    .ai-content h2 { font-size: clamp(24px, 2.5vw, 36px); font-weight: 900; margin-bottom: 20px; line-height: 1.3; }
+    .ai-content p { color: var(--mid); font-size: 15px; line-height: 1.8; margin-bottom: 16px; }
+    .ai-rule-list { margin-top: 20px; display: flex; flex-direction: column; gap: 10px; }
+    .ai-rule {
+      background: var(--light); border-radius: 12px;
+      padding: 12px 16px; font-size: 14px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .ai-rule::before { content: '✓'; color: var(--line); font-weight: 900; }
+
+    /* ── IMPACT ── */
+    .impact { background: var(--line); padding: 80px 40px; text-align: center; }
+    .impact h2 { color: white; font-size: clamp(24px, 3vw, 40px); font-weight: 900; margin-bottom: 16px; }
+    .impact p { color: rgba(255,255,255,.85); font-size: 16px; margin-bottom: 48px; }
+    .impact-grid {
+      max-width: 800px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .impact-card {
+      background: rgba(255,255,255,.15); border-radius: var(--radius);
+      padding: 28px 20px; backdrop-filter: blur(4px);
+    }
+    .impact-num {
+      font-family: 'Nunito', sans-serif;
+      font-size: 48px; font-weight: 900;
+      color: white; line-height: 1; margin-bottom: 8px;
+    }
+    .impact-label { color: rgba(255,255,255,.85); font-size: 14px; }
+
+    /* ── COMPARE ── */
+    .compare { background: var(--light); text-align: center; }
+    .compare-inner { max-width: 900px; margin: 0 auto; }
+    .compare-table {
+      width: 100%; margin-top: 48px;
+      border-collapse: collapse; border-radius: var(--radius);
+      overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,.08);
+    }
+    .compare-table thead tr {
+      background: var(--dark); color: white;
+    }
+    .compare-table thead th {
+      padding: 18px 16px; font-size: 14px; font-weight: 800;
+    }
+    .compare-table thead th.highlight {
+      background: var(--line); font-size: 16px;
+    }
+    .compare-table tbody tr { background: white; }
+    .compare-table tbody tr:nth-child(even) { background: #f9f9f9; }
+    .compare-table td {
+      padding: 16px; text-align: center;
+      border-bottom: 1px solid #eee; font-size: 14px; color: var(--mid);
+    }
+    .compare-table td:first-child {
+      font-weight: 700; color: var(--dark); text-align: left; padding-left: 24px;
+    }
+    .compare-table td.good {
+      color: var(--line); font-weight: 800;
+    }
+    .compare-table td.good::before { content: '✅ '; }
+    .compare-table td.bad { color: #aaa; }
+
+    /* ── TESTIMONIAL ── */
+    .testimonial { background: var(--dark); padding: 96px 40px; text-align: center; }
+    .testimonial-inner { max-width: 780px; margin: 0 auto; }
+    .testimonial blockquote {
+      font-size: clamp(18px, 2vw, 24px);
+      font-weight: 700; color: white; line-height: 1.7;
+      border-left: 5px solid var(--line);
+      padding: 32px 40px; text-align: left;
+      background: rgba(255,255,255,.05); border-radius: 0 var(--radius) var(--radius) 0;
+      margin-bottom: 24px;
+    }
+    .testimonial cite {
+      color: rgba(255,255,255,.5); font-size: 14px; font-style: normal;
+    }
 
     /* ── FLOW ── */
     .flow { background: var(--white); text-align: center; }
@@ -235,7 +352,7 @@
     }
     .flow-step:not(:last-child)::after {
       content: '→'; position: absolute; right: -10px; top: 28px;
-      color: var(--primary); font-size: 1.4rem; font-weight: bold;
+      color: var(--line); font-size: 1.4rem; font-weight: bold;
     }
     .step-num {
       width: 56px; height: 56px; border-radius: 50%;
@@ -243,41 +360,41 @@
       font-family: 'Nunito', sans-serif; font-size: 22px; font-weight: 900;
       color: var(--white); margin: 0 auto 14px;
     }
-    .step-num-1 { background: var(--primary); }
+    .step-num-1 { background: var(--line); }
     .step-num-2 { background: var(--secondary); }
-    .step-num-3 { background: var(--accent); color: var(--dark); }
+    .step-num-3 { background: var(--primary); }
     .step-num-4 { background: var(--dark); }
     .flow-step h3 { font-size: 15px; font-weight: 800; color: var(--dark); margin-bottom: 6px; }
     .flow-step p { font-size: 12px; color: var(--mid); }
 
     /* ── FOR WHO ── */
     .for-who { background: #f0fdf4; text-align: center; }
-    .for-who-list {
-      display: flex; flex-direction: column; gap: 12px;
-      max-width: 520px; margin: 36px auto 0; text-align: left;
+    .industry-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(160px,1fr));
+      gap: 16px; max-width: 800px; margin: 40px auto 0;
     }
-    .for-who-item {
-      background: var(--white);
-      border-left: 5px solid var(--primary);
-      padding: 14px 20px; border-radius: 0 12px 12px 0;
-      font-size: 15px; color: var(--dark); font-weight: 500;
-      box-shadow: 0 2px 10px rgba(0,0,0,.05);
-      display: flex; align-items: center; gap: 10px;
+    .industry-item {
+      background: white; border-radius: var(--radius);
+      padding: 20px 16px; text-align: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,.06);
+      transition: transform .2s;
     }
-    .for-who-item::before { content: '✓'; color: var(--primary); font-weight: 900; font-size: 16px; }
+    .industry-item:hover { transform: translateY(-4px); }
+    .industry-item .icon { font-size: 2rem; margin-bottom: 10px; }
+    .industry-item p { font-size: 13px; font-weight: 700; color: var(--dark); }
 
     /* ── CTA / CONTACT ── */
     .cta-section {
-      background: linear-gradient(135deg, var(--primary) 0%, #ff4757 100%);
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
       padding: 96px 40px; text-align: center;
     }
     .cta-section h2 { font-size: clamp(24px,3vw,38px); font-weight: 900; color: white; margin-bottom: 16px; }
-    .cta-section > p { color: rgba(255,255,255,.9); font-size: 16px; margin-bottom: 48px; }
+    .cta-section > p { color: rgba(255,255,255,.7); font-size: 16px; margin-bottom: 48px; }
 
     .contact-form {
       background: var(--white); border-radius: var(--radius-lg);
       padding: 48px 40px; max-width: 580px; margin: 0 auto;
-      text-align: left; box-shadow: 0 20px 60px rgba(0,0,0,.15);
+      text-align: left; box-shadow: 0 20px 60px rgba(0,0,0,.2);
     }
     .contact-form h3 {
       font-size: 18px; font-weight: 900; color: var(--dark);
@@ -299,17 +416,17 @@
     }
     .form-group input:focus,
     .form-group textarea:focus,
-    .form-group select:focus { border-color: var(--primary); }
+    .form-group select:focus { border-color: var(--line); }
     .form-group textarea { height: 110px; resize: vertical; }
     .form-submit {
-      width: 100%; background: var(--primary); color: white; border: none;
+      width: 100%; background: var(--line); color: white; border: none;
       padding: 16px; border-radius: 50px;
       font-family: 'Noto Sans JP', sans-serif;
       font-size: 16px; font-weight: 800; cursor: pointer;
       transition: transform .2s, box-shadow .2s;
-      box-shadow: 0 6px 24px rgba(255,107,107,.35); margin-top: 8px;
+      box-shadow: 0 6px 24px rgba(6,199,85,.35); margin-top: 8px;
     }
-    .form-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(255,107,107,.45); }
+    .form-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(6,199,85,.45); }
     .form-note { font-size: 12px; color: #aaa; text-align: center; margin-top: 12px; }
 
     /* ── FOOTER ── */
@@ -320,7 +437,7 @@
     .footer-logo {
       font-family: 'Nunito', sans-serif;
       font-size: 26px; font-weight: 900;
-      color: var(--primary); margin-bottom: 10px;
+      color: var(--line); margin-bottom: 10px;
     }
     .footer-logo span { color: var(--secondary); }
     footer p { color: rgba(255,255,255,.4); font-size: 13px; }
@@ -342,8 +459,13 @@
       .hero-inner { grid-template-columns: 1fr; gap: 40px; }
       .hero-visual { display: none; }
       .stats-inner { grid-template-columns: 1fr; gap: 20px; }
+      .ai-inner { grid-template-columns: 1fr; }
+      .impact-grid { grid-template-columns: 1fr; }
       .flow-step:not(:last-child)::after { display: none; }
       .contact-form { padding: 32px 24px; }
+      .compare-table { font-size: 12px; }
+      .compare-table td { padding: 12px 8px; }
+      .testimonial blockquote { padding: 24px 20px; }
     }
   </style>
 </head>
@@ -352,24 +474,28 @@
 <!-- ナビ -->
 <nav>
   <a href="#" class="logo">シフト<span>る</span></a>
-  <a href="#contact" class="cta-nav">無料で問い合わせる</a>
+  <a href="#contact" class="cta-nav">💚 無料で問い合わせる</a>
 </nav>
 
 <!-- ヒーロー -->
 <section class="hero">
   <div class="hero-inner">
     <div>
-      <div class="hero-badge fade-up">📅 あらゆる職場で使えるシフト管理ツール</div>
+      <div class="hero-badge fade-up">
+        <span class="line-icon">L</span>
+        LINEで始めるシフト管理
+      </div>
       <h1 class="fade-up delay-1">
-        シフト作成の手間を、<br>
-        <em>ゼロに近づける。</em>
+        シフト作成を、<br>
+        <em>LINEでもっと軽やかに。</em>
       </h1>
       <p class="fade-up delay-2">
-        LINEでシフト希望を集めて、ボタン1つで自動生成。<br>
-        全スタッフへの通知もLINEで完了。
+        スタッフも店長も。全員が笑顔になる、次世代シフト管理アプリ。<br>
+        新しいアプリ不要。いつものLINEで今すぐ始められます。
       </p>
       <div class="hero-btns fade-up delay-2">
-        <a href="#contact" class="btn-primary">📩 無料で問い合わせる</a>
+        <a href="#contact" class="btn-line">💚 無料で問い合わせる</a>
+        <a href="#features" class="btn-secondary">機能を見る</a>
       </div>
       <p class="hero-note">※ 現在、導入店舗を募集中です（初期費用なし・月額制）</p>
     </div>
@@ -410,8 +536,8 @@
           </tbody>
         </table>
       </div>
-      <div class="floating-tag tag1">✅ LINE連携対応</div>
-      <div class="floating-tag tag2">🚀 最短2週間納品</div>
+      <div class="floating-tag tag1">✅ LINE連携・新アプリ不要</div>
+      <div class="floating-tag tag2">🤖 AI半自動シフト作成</div>
     </div>
   </div>
 </section>
@@ -420,16 +546,19 @@
 <div class="stats">
   <div class="stats-inner">
     <div>
-      <div class="stat-num">98<small style="font-size:26px">%</small></div>
-      <div class="stat-label">導入後の満足度</div>
+      <div class="stat-num">90<small>%+</small></div>
+      <div class="stat-label">シフト作成時間の削減</div>
+      <div class="stat-sub">毎月の事務作業をカット</div>
     </div>
     <div>
-      <div class="stat-num">2<small style="font-size:26px">週間</small></div>
-      <div class="stat-label">最短納品スピード</div>
+      <div class="stat-num" style="font-size:32px; padding-top:10px;">20h → <span style="color:#4ECDC4">1.5h</span></div>
+      <div class="stat-label">シフト作成にかかる時間</div>
+      <div class="stat-sub">導入前 → 現在</div>
     </div>
     <div>
-      <div class="stat-num">50<small style="font-size:26px">+</small></div>
-      <div class="stat-label">対応業種・業態</div>
+      <div class="stat-num" style="font-size:30px; padding-top:8px;">LINE<br><span style="font-size:20px">で完結</span></div>
+      <div class="stat-label">新アプリのダウンロード不要</div>
+      <div class="stat-sub">スタッフの提出率が大幅向上</div>
     </div>
   </div>
 </div>
@@ -437,80 +566,164 @@
 <!-- 課題 -->
 <section class="problem">
   <div class="section-tag">😩 Problem</div>
-  <h2 class="section-title">こんな悩み、ありませんか？</h2>
-  <p class="section-sub">スタッフのシフト管理、まだこんな方法でやっていませんか</p>
+  <h2 class="section-title">まだシフト作成に<br>何時間もかけていませんか？</h2>
+  <p class="section-sub">「集まらない」「書き写す」「調整する」―― そのストレスから解放します</p>
   <div class="problem-grid">
     <div class="problem-card">
-      <div class="icon">😩</div>
-      <h3>LINEやメモで希望をバラバラに収集</h3>
-      <p>スタッフごとに連絡方法が違って、取りまとめるだけで一苦労</p>
+      <div class="icon">📬</div>
+      <h3>希望収集の遅れ</h3>
+      <p>紙や個別のLINE・メールでバラバラに届く希望。期限が守られず、催促の連絡だけで一苦労していませんか？</p>
     </div>
     <div class="problem-card">
-      <div class="icon">📋</div>
-      <h3>Excelでシフトを手作り</h3>
-      <p>作るのに毎月数時間かかる。変更のたびに全部直し直し</p>
+      <div class="icon">⌨️</div>
+      <h3>転記ミスの恐怖</h3>
+      <p>手書きのメモをExcelに打ち込む際の入力ミス。スタッフの不満や、当日の人員不足につながるリスクです。</p>
     </div>
     <div class="problem-card">
-      <div class="icon">📞</div>
-      <h3>シフト通知が手間すぎる</h3>
-      <p>一人ずつ電話やLINEでシフトを伝える。返信確認も大変</p>
+      <div class="icon">⏰</div>
+      <h3>調整・作成に何時間も</h3>
+      <p>条件を考えながらシフトを組むだけで数時間。変更が入るたびに全部やり直し。本来の仕事に集中できない。</p>
     </div>
     <div class="problem-card">
-      <div class="icon">💸</div>
-      <h3>給与計算が面倒</h3>
-      <p>勤務時間を集計して、時給をかけて…毎月同じ作業のくり返し</p>
+      <div class="icon">📣</div>
+      <h3>通知・共有の手間</h3>
+      <p>完成したシフトを一人ずつ連絡。変更のたびに全員に連絡し直し。見落としやトラブルが絶えない。</p>
     </div>
   </div>
-</section>
-
-<!-- 解決 -->
-<section class="solution">
-  <div class="section-tag">✨ Solution</div>
-  <h2 class="section-title">「シフトる」が全部解決します</h2>
-  <p class="section-sub">希望収集から通知まで、シフト管理のすべてをひとつのツールで</p>
 </section>
 
 <!-- 機能 -->
-<section class="features">
+<section class="features" id="features">
   <div class="features-inner">
     <div class="section-tag">⚡ Features</div>
-    <h2 class="section-title">主な機能</h2>
+    <h2 class="section-title">シンプル、だけど革新的な3つの機能</h2>
+    <p class="section-sub">『シフトる』は、使い慣れたLINEを窓口にすることで<br>管理者の事務負担を極限まで減らします</p>
     <div class="feature-grid">
       <div class="feature-card">
         <div class="icon">💬</div>
-        <h3>LINEでシフト希望を収集</h3>
-        <p>スタッフはLINEで希望を送るだけ。電話もメモも不要になります</p>
+        <h3>LINEで希望収集</h3>
+        <p>スタッフはLINEでポチポチ選ぶだけ。管理画面へリアルタイムに自動反映。新しいアプリのインストール不要。</p>
       </div>
       <div class="feature-card">
-        <div class="icon">⚡</div>
-        <h3>ワンクリックで自動生成</h3>
-        <p>希望を元に最適なシフトを自動で作成。あとは微調整するだけ</p>
+        <div class="icon">✨</div>
+        <h3>半自動シフト作成</h3>
+        <p>AIが人員過不足をチェック。ワンボタンで最適な下書きを瞬時に生成します。あとは店長が微調整するだけ。</p>
       </div>
       <div class="feature-card">
         <div class="icon">📲</div>
-        <h3>LINEで一斉通知</h3>
-        <p>完成したシフトをLINEで全スタッフに一斉送信。既読確認も不要</p>
-      </div>
-      <div class="feature-card">
-        <div class="icon">📊</div>
-        <h3>勤務時間・予定給与を自動計算</h3>
-        <p>月ごとの勤務時間と予定給与を自動で集計。給与計算の手間が激減</p>
-      </div>
-      <div class="feature-card">
-        <div class="icon">📅</div>
-        <h3>シフト確認画面</h3>
-        <p>ガントチャート形式でシフトを見やすく表示。スタッフも確認できます</p>
-      </div>
-      <div class="feature-card">
-        <div class="icon">👥</div>
-        <h3>スタッフ管理</h3>
-        <p>時給・役職・希望収集の設定をひとつの画面で管理できます</p>
+        <h3>一括送信・共有</h3>
+        <p>完成したシフトはLINEで一斉送信。変更時も即座に通知が届き、見落としゼロ。返信確認も不要。</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- フロー -->
+<!-- AI×人間 -->
+<section class="ai-section">
+  <div class="ai-inner">
+    <div class="ai-visual">
+      <div style="font-size:14px; color:var(--mid); font-weight:700; margin-bottom:8px;">シフト作成にかかる時間</div>
+      <div class="big-num">20<span style="font-size:32px">時間</span></div>
+      <div class="big-label">導入前の月間作業時間</div>
+      <div class="ai-arrow">↓</div>
+      <div class="small-num">1.5<span style="font-size:32px">時間</span></div>
+      <div style="font-size:14px; color:var(--mid); margin-top:8px; font-weight:700;">導入後の月間作業時間</div>
+      <div style="margin-top:20px; background:var(--line); color:white; border-radius:50px; padding:10px 20px; font-weight:800; font-size:14px;">
+        毎月の事務作業を 90%以上 カット ✅
+      </div>
+    </div>
+    <div class="ai-content">
+      <div class="section-tag">🤖 AI × 人間</div>
+      <h2 class="section-title">AI×人間でつくる<br>最適シフト</h2>
+      <p>『シフトる』のAIは複雑な現場ルールも考慮。事前に設定しておけば、そのルールを守ったシフトを自動生成します。</p>
+      <p>AIが作成した下書きを、店長が微調整するだけ。これまで数時間かかっていた作業がわずか数分に短縮されます。</p>
+      <div class="ai-rule-list">
+        <div class="ai-rule">「ベテランを1人は必ず入れる」</div>
+        <div class="ai-rule">「〇〇さんと××さんはペアにしない」</div>
+        <div class="ai-rule">「週3日以上は入れない」などの条件も対応</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 導入効果 -->
+<section class="impact">
+  <h2>驚異の導入効果</h2>
+  <p>現場に導入してから、こんな変化が生まれています</p>
+  <div class="impact-grid">
+    <div class="impact-card">
+      <div class="impact-num">90<span style="font-size:24px">%+</span></div>
+      <div class="impact-label">作成時間の削減</div>
+    </div>
+    <div class="impact-card">
+      <div class="impact-num">100<span style="font-size:24px">%</span></div>
+      <div class="impact-label">LINEで提出率向上</div>
+    </div>
+    <div class="impact-card">
+      <div class="impact-num">0<span style="font-size:24px">円</span></div>
+      <div class="impact-label">初期費用・導入費</div>
+    </div>
+  </div>
+</section>
+
+<!-- 比較表 -->
+<section class="compare">
+  <div class="compare-inner">
+    <div class="section-tag">📊 Compare</div>
+    <h2 class="section-title">他社ツール・従来手法との比較</h2>
+    <p class="section-sub">シフトるが選ばれる理由が、一目でわかります</p>
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th style="text-align:left; padding-left:24px;">比較項目</th>
+          <th>紙・Excel管理</th>
+          <th>他社高機能アプリ</th>
+          <th class="highlight">シフトる（LINE連携）</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>提出のしやすさ</td>
+          <td class="bad">店舗に行く必要あり</td>
+          <td class="bad">新アプリのDLが必要</td>
+          <td class="good">LINEで完結</td>
+        </tr>
+        <tr>
+          <td>作成スピード</td>
+          <td class="bad">手動で数時間〜数日</td>
+          <td class="bad">機能が多く設定が複雑</td>
+          <td class="good">AIで数分</td>
+        </tr>
+        <tr>
+          <td>コスト</td>
+          <td class="bad">人件費（大）</td>
+          <td class="bad">月額数万円〜</td>
+          <td class="good">圧倒的低コスト</td>
+        </tr>
+        <tr>
+          <td>スタッフの負担</td>
+          <td class="bad">紙・メール・電話</td>
+          <td class="bad">新アプリの使い方を覚える</td>
+          <td class="good">いつものLINEのみ</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- お客様の声 -->
+<section class="testimonial">
+  <div class="testimonial-inner">
+    <div class="section-tag" style="background:rgba(6,199,85,.2); color:#06C755;">💬 Voice</div>
+    <h2 class="section-title" style="color:white; margin-bottom:40px;">お客様の声</h2>
+    <blockquote>
+      「シフトるを導入してから、スタッフとの会話が増えました。事務的な催促ではなく、もっとポジティブな話に時間を使えるようになったのが一番の収穫です。」
+    </blockquote>
+    <cite>― カフェ・ド・ソレイユ 店長 佐藤様</cite>
+  </div>
+</section>
+
+<!-- 使い方 -->
 <section class="flow">
   <div class="flow-inner">
     <div class="section-tag">📋 How it works</div>
@@ -519,48 +732,67 @@
     <div class="flow-steps">
       <div class="flow-step">
         <div class="step-num step-num-1">1</div>
-        <h3>希望収集を開く</h3>
-        <p>対象期間を設定してLINEで告知</p>
+        <h3>LINE公式アカウントを<br>友だち追加</h3>
+        <p>スタッフが追加するだけ。新アプリ不要</p>
       </div>
       <div class="flow-step">
         <div class="step-num step-num-2">2</div>
-        <h3>スタッフが希望を送信</h3>
-        <p>LINEから希望日・時間を入力</p>
+        <h3>LINEで希望を送信</h3>
+        <p>カレンダーからポチポチ選ぶだけ</p>
       </div>
       <div class="flow-step">
         <div class="step-num step-num-3">3</div>
-        <h3>シフトを自動生成</h3>
-        <p>ボタン1つで最適なシフトが完成</p>
+        <h3>AIがシフト下書きを生成</h3>
+        <p>人員・条件を考慮して数分で完成</p>
       </div>
       <div class="flow-step">
         <div class="step-num step-num-4">4</div>
         <h3>LINEで一斉通知</h3>
-        <p>全スタッフに自動送信完了</p>
+        <p>全スタッフに自動送信。変更も即通知</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- こんな方に -->
+<!-- こんな職場に -->
 <section class="for-who">
-  <div class="section-tag">👤 For who</div>
-  <h2 class="section-title">こんな方におすすめ</h2>
-  <div class="for-who-list">
-    <div class="for-who-item">毎月のシフト作成に2〜3時間以上かかっている</div>
-    <div class="for-who-item">スタッフが10名以上いて管理が大変</div>
-    <div class="for-who-item">LINEでのやりとりが多くて見落としが怖い</div>
-    <div class="for-who-item">給与計算のたびに時間を手作業で集計している</div>
-    <div class="for-who-item">アルバイト・パートが多く希望がバラバラで把握しにくい</div>
-    <div class="for-who-item">小売・介護・美容・サービス業など幅広い業種で活用可能</div>
+  <div class="section-tag">🏢 Industries</div>
+  <h2 class="section-title">あらゆる「現場」に、<br>イキイキとした毎日を</h2>
+  <p class="section-sub">業種を問わず、スタッフが10名以上いる職場であればどこでもご利用いただけます</p>
+  <div class="industry-grid">
+    <div class="industry-item">
+      <div class="icon">🍽️</div>
+      <p>飲食・カフェ</p>
+    </div>
+    <div class="industry-item">
+      <div class="icon">🛍️</div>
+      <p>小売・アパレル</p>
+    </div>
+    <div class="industry-item">
+      <div class="icon">🏥</div>
+      <p>医療・クリニック</p>
+    </div>
+    <div class="industry-item">
+      <div class="icon">💊</div>
+      <p>介護・福祉</p>
+    </div>
+    <div class="industry-item">
+      <div class="icon">💇</div>
+      <p>美容・エステ</p>
+    </div>
+    <div class="industry-item">
+      <div class="icon">🏨</div>
+      <p>ホテル・宿泊</p>
+    </div>
   </div>
 </section>
 
 <!-- お問い合わせ -->
 <section class="cta-section" id="contact">
-  <h2>まずは無料でご相談ください</h2>
-  <p>導入方法や料金など、お気軽にお問い合わせください。<br>現在、初期費用なしでご利用いただける導入プランをご案内しています。</p>
+  <h2>まずは無料体験から。</h2>
+  <p>現場をイキイキとさせる第一歩を、『シフトる』で踏み出しませんか？<br>導入方法や料金など、お気軽にお問い合わせください。</p>
   <div class="contact-form">
-    <h3>📩 お問い合わせフォーム</h3>
+    <h3>💚 お問い合わせフォーム</h3>
     <form action="https://formspree.io/f/xzdwvkrb" method="POST">
       <div class="form-group">
         <label>お名前<span class="req">*</span></label>
@@ -590,7 +822,7 @@
       </div>
       <input type="hidden" name="_subject" value="【シフトる】お問い合わせ">
       <input type="hidden" name="_replyto" value="contact@print-mahalo.com">
-      <button type="submit" class="form-submit">送信する →</button>
+      <button type="submit" class="form-submit">💚 送信する →</button>
       <p class="form-note">返信は contact@print-mahalo.com よりお送りします</p>
     </form>
   </div>
