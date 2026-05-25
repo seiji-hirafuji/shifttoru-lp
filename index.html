@@ -326,17 +326,30 @@
 
     /* ── TESTIMONIAL ── */
     .testimonial { background: var(--dark); padding: 96px 40px; text-align: center; }
-    .testimonial-inner { max-width: 780px; margin: 0 auto; }
+    .testimonial-inner { max-width: 900px; margin: 0 auto; }
+    .testimonial-layout {
+      display: grid; grid-template-columns: 1fr 1.6fr;
+      gap: 48px; align-items: center; text-align: left;
+    }
+    .testimonial-img {
+      border-radius: var(--radius-lg); overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,.4);
+    }
+    .testimonial-img img { width: 100%; height: 320px; object-fit: cover; display: block; }
     .testimonial blockquote {
-      font-size: clamp(18px, 2vw, 24px);
-      font-weight: 700; color: white; line-height: 1.7;
+      font-size: clamp(16px, 1.8vw, 22px);
+      font-weight: 700; color: white; line-height: 1.8;
       border-left: 5px solid var(--line);
-      padding: 32px 40px; text-align: left;
+      padding: 28px 32px; text-align: left;
       background: rgba(255,255,255,.05); border-radius: 0 var(--radius) var(--radius) 0;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
     .testimonial cite {
       color: rgba(255,255,255,.5); font-size: 14px; font-style: normal;
+    }
+    @media (max-width: 700px) {
+      .testimonial-layout { grid-template-columns: 1fr; }
+      .testimonial-img { display: none; }
     }
 
     /* ── FLOW ── */
@@ -370,18 +383,26 @@
     /* ── FOR WHO ── */
     .for-who { background: #f0fdf4; text-align: center; }
     .industry-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(160px,1fr));
-      gap: 16px; max-width: 800px; margin: 40px auto 0;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+      gap: 20px; max-width: 900px; margin: 40px auto 0;
     }
     .industry-item {
       background: white; border-radius: var(--radius);
-      padding: 20px 16px; text-align: center;
-      box-shadow: 0 4px 16px rgba(0,0,0,.06);
-      transition: transform .2s;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0,0,0,.08);
+      transition: transform .25s, box-shadow .25s;
+      text-align: left;
     }
-    .industry-item:hover { transform: translateY(-4px); }
-    .industry-item .icon { font-size: 2rem; margin-bottom: 10px; }
-    .industry-item p { font-size: 13px; font-weight: 700; color: var(--dark); }
+    .industry-item:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(0,0,0,.13); }
+    .industry-item img {
+      width: 100%; height: 150px; object-fit: cover; display: block;
+    }
+    .industry-item-info {
+      padding: 16px 18px; display: flex; align-items: center; gap: 10px;
+    }
+    .industry-item .icon { font-size: 1.5rem; }
+    .industry-item p { font-size: 14px; font-weight: 800; color: var(--dark); }
+    .industry-item small { font-size: 12px; color: var(--mid); display: block; margin-top: 2px; font-weight: 400; }
 
     /* ── CTA / CONTACT ── */
     .cta-section {
@@ -714,12 +735,18 @@
 <!-- お客様の声 -->
 <section class="testimonial">
   <div class="testimonial-inner">
-    <div class="section-tag" style="background:rgba(6,199,85,.2); color:#06C755;">💬 Voice</div>
-    <h2 class="section-title" style="color:white; margin-bottom:40px;">お客様の声</h2>
-    <blockquote>
-      「シフトるを導入してから、スタッフとの会話が増えました。事務的な催促ではなく、もっとポジティブな話に時間を使えるようになったのが一番の収穫です。」
-    </blockquote>
-    <cite>― カフェ・ド・ソレイユ 店長 佐藤様</cite>
+    <div class="section-tag" style="background:rgba(6,199,85,.2); color:#06C755; margin-bottom:32px;">💬 お客様の声</div>
+    <div class="testimonial-layout">
+      <div class="testimonial-img">
+        <img src="https://images.unsplash.com/photo-1521017432531-fbd92d768814?w=600&h=400&fit=crop&q=80" alt="カフェの店長" loading="lazy">
+      </div>
+      <div>
+        <blockquote>
+          「シフトるを導入してから、スタッフとの会話が増えました。事務的な催促ではなく、もっとポジティブな話に時間を使えるようになったのが一番の収穫です。」
+        </blockquote>
+        <cite>― カフェ・ド・ソレイユ 店長 佐藤様</cite>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -761,28 +788,46 @@
   <p class="section-sub">業種を問わず、スタッフが10名以上いる職場であればどこでもご利用いただけます</p>
   <div class="industry-grid">
     <div class="industry-item">
-      <div class="icon">🍽️</div>
-      <p>飲食・カフェ</p>
+      <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=400&h=150&fit=crop&q=80" alt="飲食・カフェ" loading="lazy">
+      <div class="industry-item-info">
+        <span class="icon">🍽️</span>
+        <div><p>飲食・カフェ</p><small>合間にLINEでサッと管理</small></div>
+      </div>
     </div>
     <div class="industry-item">
-      <div class="icon">🛍️</div>
-      <p>小売・アパレル</p>
+      <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400&h=150&fit=crop&q=80" alt="小売・アパレル" loading="lazy">
+      <div class="industry-item-info">
+        <span class="icon">🛍️</span>
+        <div><p>小売・アパレル</p><small>店舗のどこでもシフト調整</small></div>
+      </div>
     </div>
     <div class="industry-item">
-      <div class="icon">🏥</div>
-      <p>医療・クリニック</p>
+      <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&h=150&fit=crop&q=80" alt="医療・クリニック" loading="lazy">
+      <div class="industry-item-info">
+        <span class="icon">🏥</span>
+        <div><p>医療・クリニック</p><small>多忙な現場でも簡単操作</small></div>
+      </div>
     </div>
     <div class="industry-item">
-      <div class="icon">💊</div>
-      <p>介護・福祉</p>
+      <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400&h=150&fit=crop&q=80" alt="介護・福祉" loading="lazy">
+      <div class="industry-item-info">
+        <span class="icon">💊</span>
+        <div><p>介護・福祉</p><small>複雑なシフトもAIが対応</small></div>
+      </div>
     </div>
     <div class="industry-item">
-      <div class="icon">💇</div>
-      <p>美容・エステ</p>
+      <img src="https://images.unsplash.com/photo-1560066984-138daaa4e4e1?w=400&h=150&fit=crop&q=80" alt="美容・エステ" loading="lazy">
+      <div class="industry-item-info">
+        <span class="icon">💇</span>
+        <div><p>美容・エステ</p><small>スタッフの希望を素早く集約</small></div>
+      </div>
     </div>
     <div class="industry-item">
-      <div class="icon">🏨</div>
-      <p>ホテル・宿泊</p>
+      <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400&h=150&fit=crop&q=80" alt="ホテル・宿泊" loading="lazy">
+      <div class="industry-item-info">
+        <span class="icon">🏨</span>
+        <div><p>ホテル・宿泊</p><small>24h対応のシフト通知</small></div>
+      </div>
     </div>
   </div>
 </section>
